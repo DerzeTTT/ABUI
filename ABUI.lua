@@ -65,9 +65,9 @@ local function ReturnValueIndex(Table, Value)
 	end
 end
 
-function FindPlayer(msg)
-    local msg = msg:lower()
-    for _,v in pairs(game.Players:GetPlayers()) do
+function FindPlayer(text)
+    local text = msg:lower()
+    for _,v in pairs(workspace.Entities:GetChildren()) do
         local name = v.Name:lower():sub(0, msg:len())
         if name == msg then
             return v
@@ -164,11 +164,9 @@ DIOFarmSector:Cheat("Checkbox", "Auto Pickup Items", function(State)
 end)
 
 DIOFarmSector:Cheat("Checkbox", "Enabled", function(State)
-	DIOFarm = State
-end)
 
-game:GetService("RunService").RenderStepped:Connect(function()
-	if DIOFarm == false then return false end
+while wait() do
+	if DIOFarm == false then repeat wait() until DIOFarm == true end
 	repeat wait() until game:GetService("Workspace"):FindFirstChild("DIO", true)
 		local userdata_1 = game:GetService("Workspace").Entities["DIO"].Humanoid;
         local number_1 = math.huge;
@@ -184,7 +182,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
 		end
 	end
 end
-end)
+end
 
 --Samurai Farm Options ▼
 
