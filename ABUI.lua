@@ -14,11 +14,20 @@ local CharacterSector = CheatsSection:Sector("Character Cheats")
 local DIOFarmSector = FarmSection:Sector("DIO Farm")
 local StandFarmSector = FarmSection:Sector("Stand Farm")
 local SamuraiFarmSector = FarmSection:Sector("Samurai Farm")
+local ItemFarmSector = FarmSection:Sector("Item Farm")
 -----------------------------
 --Sectors ▲
 
-local DamageAmount = 249.5
-local KnockbackAmount = 15
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Character = Player.Character
+local Root = Character.HumanoidRootPart
+local Humanoid = Character.Humanoid
+
+--Player/Services Stuff ▲
+
+local DamageAmount = 499/2
+local KnockbackAmount = 30/2
 local HitAmount = 250/2
 local Target = ""
 
@@ -39,9 +48,33 @@ local SamuraiFarm = false
 --Stand Farm
 local StandFarm = false
 local CurrentStandFarm = ""
+
+--Item Farm
+local ItemFarmEnabled = false
+local ItemsToFarm = {}
+
 -------------------------------------------------
 --Variables ▲
 
+--Functions ▼
+local function ReturnValueIndex(Table, Value)
+	for i,v in pairs(Table) do
+		if v == Value then
+			return i
+		end
+	end
+end
+
+function FindPlayer(msg)
+    local msg = msg:lower()
+    for _,v in pairs(game.Players:GetPlayers()) do
+        local name = v.Name:lower():sub(0, msg:len())
+        if name == msg then
+            return v
+        end
+    end
+    return nil
+end
 
 --Cheats ▼
 
@@ -60,7 +93,7 @@ HitAmount = Val
 end, {min = 1, max = 250})
 
 local TargetBox = CombatSector:Cheat("TextBox", "Target", function(Text)
-Target = Text
+Target = FindPlayer(Text).Name
 end, {placeholder = "Target can be an NPC"})
 
 local HitButton = CombatSector:Cheat("Button", "Hit Target", function()
@@ -83,7 +116,7 @@ Target:FireServer(userdata_1, userdata_2, number_1, number_2, userdata_3, string
 	
 end)
 
-local BringButton = CombatSector:Cheat("Button", "Bring Target", function()
+local BringButton = CombatSector:Cheat("Button", "Bring/Kill Target", function()
 	for i = 1,HitAmount do
 	local userdata_1 = game:GetService("Workspace").Entities[Target].Humanoid;
 local number_1 = DamageAmount;
@@ -92,6 +125,10 @@ local userdata_2 = Vector3.new(14.5143147, -7.00628107e-07, 47.8469925);
 local Target = game:GetService("ReplicatedStorage").VampireFreeze;
 Target:FireServer(userdata_1, number_1, number_2, userdata_2);
 end
+end)
+
+CombatSector:Cheat("Button", "Goto Target", function()
+	Root.CFrame = Players[Target].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
 end)
 
 local InfHealthButton = CharacterSector:Cheat("Button", "Infinite Health", function()
@@ -122,24 +159,43 @@ end)
 
 --DIO Farm Options ▼
 
-local AutoGetCheckbox = DIOFarmSector:Cheat("Checkbox", "Auto Pickup Items", function(State)
+DIOFarmSector:Cheat("Checkbox", "Auto Pickup Items", function(State)
 	AutoTPITems = State
 end)
 
-local EnabledDIOFarmCheckbox = DIOFarmSector:Cheat("Checkbox", "Enabled", function(State)
+DIOFarmSector:Cheat("Checkbox", "Enabled", function(State)
 	DIOFarm = State
+end)
+
+game:GetService("RunService").RenderStepped:Connect(function()
+	if DIOFarm == false then return false end
+	repeat wait() until game:GetService("Workspace"):FindFirstChild("DIO", true)
+		local userdata_1 = game:GetService("Workspace").Entities["DIO"].Humanoid;
+        local number_1 = math.huge;
+        local number_2 = 0;
+        local userdata_2 = Vector3.new(14.5143147, -7.00628107e-07, 47.8469925);
+        local Target = game:GetService("ReplicatedStorage").VampireFreeze;
+        Target:FireServer(userdata_1, number_1, number_2, userdata_2);
+        for i = 1,20 do
+	wait(0.1)
+	for _,v in pairs(workspace:GetDescendants()) do
+		if v:IsA("Tool") then
+			v.Handle.CFrame = Root.CFrame
+		end
+	end
+end
 end)
 
 --Samurai Farm Options ▼
 
-local EnabledSamuraiFarmCheckbox = SamuraiFarmSector:Cheat("Checkbox", "Enabled", function(State)
+SamuraiFarmSector:Cheat("Checkbox", "Enabled", function(State)
 	SamuraiFarm = State
 end)
 
 
 --Stand Farm Options ▼
 
-local EnabledStandFarmCheckbox = StandFarmSector:Cheat("Checkbox", "Enabled", function(State)
+StandFarmSector:Cheat("Checkbox", "Enabled", function(State)
 	StandFarm = State
 end)
 
@@ -157,6 +213,99 @@ end, {
 
 
 
+--Item Farm Options ▼
+ItemFarmSector:Cheat("Checkbox", "Enabled", function(State)
+	ItemFarmEnabled = State
+end)
+
+ItemFarmSector:Cheat("Checkbox", "Banknotes", function(State)
+	if State then
+		table.insert(ItemsToFarm, 1, "Banknote")
+	else
+		table.remove(ItemsToFarm, 1)
+	end
+end)
+
+ItemFarmSector:Cheat("Checkbox", "Arrows", function(State)
+	if State then
+		table.insert(ItemsToFarm, 2, "Arrow")
+	else
+		table.remove(ItemsToFarm, 2)
+	end
+end)
+
+ItemFarmSector:Cheat("Checkbox", "Frogs", function(State)
+	if State then
+		table.insert(ItemsToFarm, 3, "Frog")
+	else
+		table.remove(ItemsToFarm, 3)
+	end
+end)
+
+ItemFarmSector:Cheat("Checkbox", "Diary", function(State)
+	if State then
+		table.insert(ItemsToFarm, 4, "DIO's Diary")
+	else
+		table.remove(ItemsToFarm, 4)
+	end
+end)
+
+ItemFarmSector:Cheat("Checkbox", "Camera", function(State)
+	if State then
+		table.insert(ItemsToFarm, 5, "Camera")
+	else
+		table.remove(ItemsToFarm, 5)
+	end
+end)
+
+ItemFarmSector:Cheat("Checkbox", "Rokakaka Fruits", function(State)
+	if State then
+		table.insert(ItemsToFarm, 1, "Rokakaka Fruit")
+	else
+		table.remove(ItemsToFarm, 1)
+	end
+end)
+
+
+ItemFarmSector:Cheat("Checkbox", "Vampire Masks", function(State)
+	if State then
+		table.insert(ItemsToFarm, 6, "Vampire Mask")
+	else
+		table.remove(ItemsToFarm, 6)
+	end
+end)
+
+ItemFarmSector:Cheat("Checkbox", "Requiem Arrows", function(State)
+	if State then
+		table.insert(ItemsToFarm, 7, "Requiem Arrow")
+	else
+		table.remove(ItemsToFarm, 7)
+	end
+end)
+
+ItemFarmSector:Cheat("Checkbox", "Ender Pearls", function(State)
+	if State then
+		table.insert(ItemsToFarm, 8, "Ender Pearl")
+	else
+		table.remove(ItemsToFarm, 8)
+	end
+end)
+
+--Item Farm Scripts ▼
+
+game:GetService("RunService").RenderStepped:Connect(function()
+	if ItemFarmEnabled then
+		for _,Thing in pairs(ItemsToFarm) do
+			if game:GetService("Workspace"):FindFirstChild(Thing) then
+				game:GetService("Workspace"):FindFirstChild(Thing).Handle.CFrame = Root.CFrame
+				wait(.05)
+				Humanoid:EquipTool(Player.Backpack[Thing])
+			end
+		end
+	end
+end)
+
 --Information Section ▼
 local CreditsSector = InformationSection:Sector("Credits:")
-CreditsSector:Cheat("Label", "Credits go to Project Finity staff for creating the UI Library and DerzeTT#7492 (The creator of this GUI)!")
+CreditsSector:Cheat("Label", "UI Library Credits go to the Project Finity Creators for making this awesome UI Library!")
+CreditsSector:Cheat("Label", "Scripts and GUI making credits go to DerzeTT#7492 (Me! :D)")
