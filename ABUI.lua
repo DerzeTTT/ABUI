@@ -1,4 +1,4 @@
-local Finity = loadstring(game:HttpGet("https://d3to-finity.000webhostapp.com/files/source-0.1.2.txt"))()
+local Finity = loadstring(game:HttpGet("https://d3to-finity.000webhostapp.com/files/source-0.1.2.txt", true))()
 local Window = Finity.new(true)
 Window.ChangeToggleKey(Enum.KeyCode.Semicolon)
 local CheatsSection = Window:Category("Cheats")
@@ -8,7 +8,7 @@ local InformationSection = Window:Category("Information")
 
 --Cheat Sectors ▼
 local CombatSector = CheatsSection:Sector("Combat Cheats")
-local CrashSector = CheatsSection:Sector("Crash Server")
+local SeverSector = CheatsSection:Sector("Server Cheats")
 local CharacterSector = CheatsSection:Sector("Character Cheats")
 --Farm Sectors ▼
 local DIOFarmSector = FarmSection:Sector("DIO Farm")
@@ -65,11 +65,12 @@ local function ReturnValueIndex(Table, Value)
 	end
 end
 
-function FindPlayer(text)
-    local text = msg:lower()
-    for _,v in pairs(workspace.Entities:GetChildren()) do
-        local name = v.Name:lower():sub(0, msg:len())
-        if name == msg then
+function FindPlayer(Text)
+    local Text = Text:lower()
+    for _, v in pairs(workspace.Entities:GetChildren()) do
+	if not v:FindFirstChildOfClass("Humanoid") then return false end
+        local name = v.Name:lower():sub(0, Text:len())
+        if name == Text then
             return v
         end
     end
@@ -128,7 +129,23 @@ end
 end)
 
 CombatSector:Cheat("Button", "Goto Target", function()
-	Root.CFrame = Players[Target].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+	Root.CFrame = workspace.Entities[Target].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+end)
+
+CombatSector:Cheat("Button", "Float Target", function()
+	local userdata_1 = workspace.Entities[Target].Humanoid;
+local userdata_2 = CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
+local number_1 = 0;
+local number_2 = 39;
+local userdata_3 = Vector3.new(0,4,0);
+local string_1 = "";
+local number_3 = 0.075;
+local userdata_4 = Color3.new(255, 255, 255);
+local string_2 = "rbxassetid://386946017";
+local number_4 = 0;
+local number_5 = 0;
+local Target = game:GetService("ReplicatedStorage").Damage;
+Target:FireServer(userdata_1, userdata_2, number_1, number_2, userdata_3, string_1, number_3, userdata_4, string_2, number_4, number_5);
 end)
 
 local InfHealthButton = CharacterSector:Cheat("Button", "Infinite Health", function()
@@ -140,14 +157,21 @@ local Target = game:GetService("ReplicatedStorage").VampireFreeze;
 Target:FireServer(userdata_1, number_1, number_2, userdata_2);
 end)
 
---Crash Cheats ▼
+CharacterSector:Cheat("Slider", "Walk Speed", function(Val)
+	Humanoid.WalkSpeed = Val
+end, {min = 16, max = 200, suffix = " Walk Speed"})
+
+CharacterSector:Cheat("Slider", "Jump Power", function(Val)
+	Humanoid.JumpPower = Val
+end, {min = 50, max = 125, suffix = " Jump Power"})
+--Server Cheats ▼
 
 
-local CrashSlider = CrashSector:Cheat("Slider", "Strength", function(Val)
+local CrashSlider = SeverSector:Cheat("Slider", "Strength", function(Val)
 	CrashStrength = Val
 end, {min = 5, max = 20})
 
-local CrashButton = CrashSector:Cheat("Button", "Crash", function()
+local CrashButton = SeverSector:Cheat("Button", "Crash", function()
 	game:GetService("RunService").RenderStepped:Connect(function()
 		for i = 1,CrashStrength do
 		local userdata_1 = CFrame.new(1892.172, -45.3632736, 220.67247, -0.99429065, -0.0476831421, 0.0954586565, -0, 0.894600272, 0.446867347, -0.10670536, 0.44431603, -0.88949275);
@@ -157,6 +181,66 @@ local CrashButton = CrashSector:Cheat("Button", "Crash", function()
 	end)
 end)
 
+SeverSector:Cheat("Button", "Kill All", function()
+	for _,PlayerV in pairs(game:GetService("Workspace").Entities:GetChildren()) do
+		if PlayerV:FindFirstChildOfClass("Humanoid") then
+			if PlayerV.Name ~= Player.Name then
+			local userdata_1 = PlayerV.Humanoid;
+local userdata_2 = CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
+local number_1 = 499;
+local number_2 = 0;
+local userdata_3 = Vector3.new(0,0,0);
+local string_1 = "";
+local number_3 = 0.075;
+local userdata_4 = Color3.new(255, 255, 255);
+local string_2 = "rbxassetid://386946017";
+local number_4 = 0;
+local number_5 = 0;
+local Target = game:GetService("ReplicatedStorage").Damage;
+Target:FireServer(userdata_1, userdata_2, number_1, number_2, userdata_3, string_1, number_3, userdata_4, string_2, number_4, number_5);
+		end
+		end
+		end
+end)
+
+SeverSector:Cheat("Button", "Float All", function()
+	for _,PlayerV in pairs(game:GetService("Workspace").Entities:GetChildren()) do
+		if PlayerV:FindFirstChildOfClass("Humanoid") then
+			if PlayerV.Name ~= Player.Name then
+local userdata_1 = PlayerV.Humanoid;
+local userdata_2 = CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
+local number_1 = 0;
+local number_2 = 39;
+local userdata_3 = Vector3.new(0,4,0);
+local string_1 = "";
+local number_3 = 0.075;
+local userdata_4 = Color3.new(255, 255, 255);
+local string_2 = "rbxassetid://386946017";
+local number_4 = 0;
+local number_5 = 0;
+local Target = game:GetService("ReplicatedStorage").Damage;
+Target:FireServer(userdata_1, userdata_2, number_1, number_2, userdata_3, string_1, number_3, userdata_4, string_2, number_4, number_5);
+		end
+		end
+		end
+end)
+
+SeverSector:Cheat("Button", "Bring All", function()
+	for _,PlayerV in pairs(game:GetService("Workspace").Entities:GetChildren()) do
+		if PlayerV:FindFirstChildOfClass("Humanoid") then
+			if PlayerV.Name ~= Player.Name then
+local userdata_1 = PlayerV.Humanoid;
+local number_1 = 0;
+local number_2 = 0;
+local userdata_2 = Vector3.new(0,-2,0);
+local Target = game:GetService("ReplicatedStorage").VampireFreeze;
+Target:FireServer(userdata_1, number_1, number_2, userdata_2);
+		end
+		end
+	end
+	wait(0.2)
+Root.CFrame = Root.CFrame * CFrame.new(0,10,0)
+end)
 --DIO Farm Options ▼
 
 DIOFarmSector:Cheat("Checkbox", "Auto Pickup Items", function(State)
@@ -183,6 +267,8 @@ while wait() do
 	end
 end
 end
+
+end)
 
 --Samurai Farm Options ▼
 
