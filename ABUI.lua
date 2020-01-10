@@ -26,7 +26,7 @@ local Humanoid = Character.Humanoid
 
 --Player/Services Stuff ▲
 
-local DamageAmount = 499/2
+local DamageAmount = 99/2
 local KnockbackAmount = 30/2
 local HitAmount = 250/2
 local Target = ""
@@ -77,13 +77,18 @@ function FindPlayer(Text)
     return nil
 end
 
+function PseudoCall(Remote, Args)
+ local Func = Remote["FireServer"]
+ Func(Remote, unpack(Args))
+end
+
 --Cheats ▼
 
 --Kill cheats ▼
 
 local DamageSlider = CombatSector:Cheat("Slider", "Damage Amount", function(Val)
 DamageAmount = Val
-end, {min = 0, max = 499, suffix = " damage"})
+end, {min = 0, max = 99, suffix = " damage"})
 
 local KnockbackSlider = CombatSector:Cheat("Slider", "Knockback Amount", function(Val)
 KnockbackAmount = Val
@@ -100,19 +105,20 @@ end, {placeholder = "Target can be an NPC"})
 local HitButton = CombatSector:Cheat("Button", "Hit Target", function()
 	
 	for i = 1,HitAmount do
-local userdata_1 = game:GetService("Workspace").Entities[Target].Humanoid;
-local userdata_2 = CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
-local number_1 = DamageAmount;
-local number_2 = KnockbackAmount;
-local userdata_3 = Vector3.new(31.6247997, -5.44205989e-07, 38.7281799);
-local string_1 = "";
-local number_3 = 0.075;
-local userdata_4 = Color3.new(255, 255, 255);
-local string_2 = "rbxassetid://386946017";
-local number_4 = 0;
-local number_5 = 0;
-local Target = game:GetService("ReplicatedStorage").Damage;
-Target:FireServer(userdata_1, userdata_2, number_1, number_2, userdata_3, string_1, number_3, userdata_4, string_2, number_4, number_5);
+			local Arguments = {
+game:GetService("Workspace").Entities[Target].Humanoid;
+CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
+DamageAmount;
+KnockbackAmount;
+ Vector3.new(31.6247997, -5.44205989e-07, 38.7281799);
+ "";
+ 0.075;
+Color3.new(255, 255, 255);
+"rbxassetid://386946017";
+0;
+0;
+				}
+PseudoCall(game:GetService("ReplicatedStorage").Damage, Arguments)
 	end
 	
 end)
@@ -133,19 +139,20 @@ CombatSector:Cheat("Button", "Goto Target", function()
 end)
 
 CombatSector:Cheat("Button", "Float Target", function()
-	local userdata_1 = workspace.Entities[Target].Humanoid;
-local userdata_2 = CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
-local number_1 = 0;
-local number_2 = 39;
-local userdata_3 = Vector3.new(0,4,0);
-local string_1 = "";
-local number_3 = 0.075;
-local userdata_4 = Color3.new(255, 255, 255);
-local string_2 = "rbxassetid://386946017";
-local number_4 = 0;
-local number_5 = 0;
-local Target = game:GetService("ReplicatedStorage").Damage;
-Target:FireServer(userdata_1, userdata_2, number_1, number_2, userdata_3, string_1, number_3, userdata_4, string_2, number_4, number_5);
+			local Arguments = {
+game:GetService("Workspace").Entities[Target].Humanoid;
+CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
+0;
+39;
+ Vector3.new(0, 5, 0);
+ "";
+ 0.075;
+Color3.new(255, 255, 255);
+"rbxassetid://386946017";
+0;
+0;
+				}
+PseudoCall(game:GetService("ReplicatedStorage").Damage, Arguments);
 end)
 
 local InfHealthButton = CharacterSector:Cheat("Button", "Infinite Health", function()
@@ -185,19 +192,22 @@ SeverSector:Cheat("Button", "Kill All", function()
 	for _,PlayerV in pairs(game:GetService("Workspace").Entities:GetChildren()) do
 		if PlayerV:FindFirstChildOfClass("Humanoid") then
 			if PlayerV.Name ~= Player.Name then
-			local userdata_1 = PlayerV.Humanoid;
-local userdata_2 = CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
-local number_1 = 499;
-local number_2 = 0;
-local userdata_3 = Vector3.new(0,0,0);
-local string_1 = "";
-local number_3 = 0.075;
-local userdata_4 = Color3.new(255, 255, 255);
-local string_2 = "rbxassetid://386946017";
-local number_4 = 0;
-local number_5 = 0;
-local Target = game:GetService("ReplicatedStorage").Damage;
-Target:FireServer(userdata_1, userdata_2, number_1, number_2, userdata_3, string_1, number_3, userdata_4, string_2, number_4, number_5);
+			local Arguments = {
+game:GetService("Workspace").Entities[PlayerV.Name].Humanoid;
+CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
+99;
+0;
+ Vector3.new(0,0,0);
+ "";
+ 0.075;
+Color3.new(255, 255, 255);
+"rbxassetid://386946017";
+0;
+0;
+				}
+						for i = 1,10 do
+PseudoCall(game:GetService("ReplicatedStorage").Damage, Arguments)
+						end
 		end
 		end
 		end
@@ -207,19 +217,20 @@ SeverSector:Cheat("Button", "Float All", function()
 	for _,PlayerV in pairs(game:GetService("Workspace").Entities:GetChildren()) do
 		if PlayerV:FindFirstChildOfClass("Humanoid") then
 			if PlayerV.Name ~= Player.Name then
-local userdata_1 = PlayerV.Humanoid;
-local userdata_2 = CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
-local number_1 = 0;
-local number_2 = 39;
-local userdata_3 = Vector3.new(0,4,0);
-local string_1 = "";
-local number_3 = 0.075;
-local userdata_4 = Color3.new(255, 255, 255);
-local string_2 = "rbxassetid://386946017";
-local number_4 = 0;
-local number_5 = 0;
-local Target = game:GetService("ReplicatedStorage").Damage;
-Target:FireServer(userdata_1, userdata_2, number_1, number_2, userdata_3, string_1, number_3, userdata_4, string_2, number_4, number_5);
+			local Arguments = {
+game:GetService("Workspace").Entities[PlayerV.Name].Humanoid;
+CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
+0;
+39;
+ Vector3.new(0, 5, 0);
+ "";
+ 0.075;
+Color3.new(255, 255, 255);
+"rbxassetid://386946017";
+0;
+0;
+				}
+PseudoCall(game:GetService("ReplicatedStorage").Damage, Arguments);
 		end
 		end
 		end
