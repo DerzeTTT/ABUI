@@ -110,7 +110,7 @@ game:GetService("Workspace").Entities[Target].Humanoid;
 CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
 DamageAmount;
 KnockbackAmount;
- Vector3.new(31.6247997, -5.44205989e-07, 38.7281799);
+ Vector3.new(0,15,0);
  "";
  0.075;
 Color3.new(255, 255, 255);
@@ -121,17 +121,6 @@ Color3.new(255, 255, 255);
 PseudoCall(game:GetService("ReplicatedStorage").Damage, Arguments)
 	end
 	
-end)
-
-local BringButton = CombatSector:Cheat("Button", "Bring/Kill Target", function()
-	for i = 1,HitAmount do
-	local userdata_1 = game:GetService("Workspace").Entities[Target].Humanoid;
-local number_1 = DamageAmount;
-local number_2 = KnockbackAmount;
-local userdata_2 = Vector3.new(14.5143147, -7.00628107e-07, 47.8469925);
-local Target = game:GetService("ReplicatedStorage").VampireFreeze;
-Target:FireServer(userdata_1, number_1, number_2, userdata_2);
-end
 end)
 
 CombatSector:Cheat("Button", "Goto Target", function()
@@ -153,6 +142,17 @@ Color3.new(255, 255, 255);
 0;
 				}
 PseudoCall(game:GetService("ReplicatedStorage").Damage, Arguments);
+end)
+
+local BringButton = CombatSector:Cheat("Button", "Bring/Kill Target", function()
+	for i = 1,HitAmount do
+	local userdata_1 = game:GetService("Workspace").Entities[Target].Humanoid;
+local number_1 = DamageAmount;
+local number_2 = KnockbackAmount;
+local userdata_2 = Vector3.new(0,5,0);
+local Target = game:GetService("ReplicatedStorage").VampireFreeze;
+Target:FireServer(userdata_1, number_1, number_2, userdata_2);
+end
 end)
 
 local InfHealthButton = CharacterSector:Cheat("Button", "Infinite Health", function()
@@ -236,21 +236,29 @@ PseudoCall(game:GetService("ReplicatedStorage").Damage, Arguments);
 		end
 end)
 
+SeverSector:Cheat("Label", "▼ this only works with stands that can ts!")
+
+SeverSector:Cheat("Button", "Timestop", function()
+	local Args = {
+		9,
+		""
+		}
+    PseudoCall(game:GetService("ReplicatedStorage").Timestop, Args)
+end)
+
 SeverSector:Cheat("Button", "Bring All", function()
 	for _,PlayerV in pairs(game:GetService("Workspace").Entities:GetChildren()) do
 		if PlayerV:FindFirstChildOfClass("Humanoid") then
 			if PlayerV.Name ~= Player.Name then
-local userdata_1 = PlayerV.Humanoid;
-local number_1 = 0;
-local number_2 = 0;
-local userdata_2 = Vector3.new(0,-2,0);
+	local userdata_1 = PlayerV.Humanoid;
+local number_1 = DamageAmount;
+local number_2 = KnockbackAmount;
+local userdata_2 = Vector3.new(0,0,0);
 local Target = game:GetService("ReplicatedStorage").VampireFreeze;
 Target:FireServer(userdata_1, number_1, number_2, userdata_2);
 		end
 		end
 	end
-	wait(0.2)
-Root.CFrame = Root.CFrame * CFrame.new(0,10,0)
 end)
 --DIO Farm Options ▼
 
@@ -313,92 +321,17 @@ ItemFarmSector:Cheat("Checkbox", "Enabled", function(State)
 	ItemFarmEnabled = State
 end)
 
-ItemFarmSector:Cheat("Checkbox", "Banknotes", function(State)
-	if State then
-		table.insert(ItemsToFarm, 1, "Banknote")
-	else
-		table.remove(ItemsToFarm, 1)
-	end
-end)
-
-ItemFarmSector:Cheat("Checkbox", "Arrows", function(State)
-	if State then
-		table.insert(ItemsToFarm, 2, "Arrow")
-	else
-		table.remove(ItemsToFarm, 2)
-	end
-end)
-
-ItemFarmSector:Cheat("Checkbox", "Frogs", function(State)
-	if State then
-		table.insert(ItemsToFarm, 3, "Frog")
-	else
-		table.remove(ItemsToFarm, 3)
-	end
-end)
-
-ItemFarmSector:Cheat("Checkbox", "Diary", function(State)
-	if State then
-		table.insert(ItemsToFarm, 4, "DIO's Diary")
-	else
-		table.remove(ItemsToFarm, 4)
-	end
-end)
-
-ItemFarmSector:Cheat("Checkbox", "Camera", function(State)
-	if State then
-		table.insert(ItemsToFarm, 5, "Camera")
-	else
-		table.remove(ItemsToFarm, 5)
-	end
-end)
-
-ItemFarmSector:Cheat("Checkbox", "Rokakaka Fruits", function(State)
-	if State then
-		table.insert(ItemsToFarm, 1, "Rokakaka Fruit")
-	else
-		table.remove(ItemsToFarm, 1)
-	end
-end)
-
-
-ItemFarmSector:Cheat("Checkbox", "Vampire Masks", function(State)
-	if State then
-		table.insert(ItemsToFarm, 6, "Vampire Mask")
-	else
-		table.remove(ItemsToFarm, 6)
-	end
-end)
-
-ItemFarmSector:Cheat("Checkbox", "Requiem Arrows", function(State)
-	if State then
-		table.insert(ItemsToFarm, 7, "Requiem Arrow")
-	else
-		table.remove(ItemsToFarm, 7)
-	end
-end)
-
-ItemFarmSector:Cheat("Checkbox", "Ender Pearls", function(State)
-	if State then
-		table.insert(ItemsToFarm, 8, "Ender Pearl")
-	else
-		table.remove(ItemsToFarm, 8)
-	end
-end)
-
 --Item Farm Scripts ▼
 
-game:GetService("RunService").RenderStepped:Connect(function()
+while wait() do
 	if ItemFarmEnabled then
-		for _,Thing in pairs(ItemsToFarm) do
-			if game:GetService("Workspace"):FindFirstChild(Thing) then
-				game:GetService("Workspace"):FindFirstChild(Thing).Handle.CFrame = Root.CFrame
-				wait(.05)
-				Humanoid:EquipTool(Player.Backpack[Thing])
+		for _,Tool in pairs(workspace:GetChildren()) do
+			if Tool:IsA("Tool") then
+				Tool.Handle.CFrame = Root.CFrame
 			end
 		end
 	end
-end)
+end
 
 --Information Section ▼
 local CreditsSector = InformationSection:Sector("Credits:")
