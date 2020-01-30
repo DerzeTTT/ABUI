@@ -88,7 +88,7 @@ end
 
 local DamageSlider = CombatSector:Cheat("Slider", "Damage Amount", function(Val)
 DamageAmount = Val
-end, {min = 0, max = 99, suffix = " damage"})
+end, {min = 0, max = 10000, suffix = " damage"})
 
 local KnockbackSlider = CombatSector:Cheat("Slider", "Knockback Amount", function(Val)
 KnockbackAmount = Val
@@ -105,20 +105,12 @@ end, {placeholder = "Target can be an NPC"})
 local HitButton = CombatSector:Cheat("Button", "Hit Target", function()
 	
 	for i = 1,HitAmount do
-			local Arguments = {
-game:GetService("Workspace").Entities[Target].Humanoid;
-CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
-DamageAmount;
-KnockbackAmount;
- Vector3.new(0,15,0);
- "";
- 0.075;
-Color3.new(255, 255, 255);
-"rbxassetid://386946017";
-0;
-0;
-				}
-PseudoCall(game:GetService("ReplicatedStorage").Damage, Arguments)
+local userdata_1 = game:GetService("Workspace").Entities[Target].Humanoid;
+local number_1 = DamageAmount;
+local number_2 = KnockbackAmount;
+local userdata_2 = Vector3.new(2,0,0);
+local Target = game:GetService("ReplicatedStorage").RoadRollerSlam;
+Target:FireServer(userdata_1, number_1, number_2, userdata_2);
 	end
 	
 end)
@@ -128,20 +120,12 @@ CombatSector:Cheat("Button", "Goto Target", function()
 end)
 
 CombatSector:Cheat("Button", "Float Target", function()
-			local Arguments = {
-game:GetService("Workspace").Entities[Target].Humanoid;
-CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
-0;
-39;
- Vector3.new(0, 5, 0);
- "";
- 0.075;
-Color3.new(255, 255, 255);
-"rbxassetid://386946017";
-0;
-0;
-				}
-PseudoCall(game:GetService("ReplicatedStorage").Damage, Arguments);
+local userdata_1 = workspace.Entities[Target];
+local number_1 = 0;
+local number_2 = math.huge;
+local userdata_2 = Vector3.new(0,5,0);
+local Target = game:GetService("ReplicatedStorage").RoadRollerSlam;
+Target:FireServer(userdata_1, number_1, number_2, userdata_2);
 end)
 
 local BringButton = CombatSector:Cheat("Button", "Bring/Kill Target", function()
@@ -156,11 +140,11 @@ end
 end)
 
 local InfHealthButton = CharacterSector:Cheat("Button", "Infinite Health", function()
-local userdata_1 = game:GetService("Players").LocalPlayer.Character.Humanoid;
+local userdata_1 = Humanoid;
 local number_1 = -math.huge;
 local number_2 = 0;
-local userdata_2 = Vector3.new(14.5143147, -7.00628107e-07, 47.8469925);
-local Target = game:GetService("ReplicatedStorage").VampireFreeze;
+local userdata_2 = Vector3.new(0,0,0);
+local Target = game:GetService("ReplicatedStorage").RoadRollerSlam;
 Target:FireServer(userdata_1, number_1, number_2, userdata_2);
 end)
 
@@ -192,22 +176,12 @@ SeverSector:Cheat("Button", "Kill All", function()
 	for _,PlayerV in pairs(game:GetService("Workspace").Entities:GetChildren()) do
 		if PlayerV:FindFirstChildOfClass("Humanoid") then
 			if PlayerV.Name ~= Player.Name then
-			local Arguments = {
-game:GetService("Workspace").Entities[PlayerV.Name].Humanoid;
-CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
-99;
-0;
- Vector3.new(0,0,0);
- "";
- 0.075;
-Color3.new(255, 255, 255);
-"rbxassetid://386946017";
-0;
-0;
-				}
-						for i = 1,10 do
-PseudoCall(game:GetService("ReplicatedStorage").Damage, Arguments)
-						end
+local userdata_1 = PlayerV.Humanoid;
+local number_1 = 1000000;
+local number_2 = 0;
+local userdata_2 = Vector3.new(0,0,0);
+local Target = game:GetService("ReplicatedStorage").RoadRollerSlam;
+Target:FireServer(userdata_1, number_1, number_2, userdata_2);
 		end
 		end
 		end
@@ -217,20 +191,12 @@ SeverSector:Cheat("Button", "Float All", function()
 	for _,PlayerV in pairs(game:GetService("Workspace").Entities:GetChildren()) do
 		if PlayerV:FindFirstChildOfClass("Humanoid") then
 			if PlayerV.Name ~= Player.Name then
-			local Arguments = {
-game:GetService("Workspace").Entities[PlayerV.Name].Humanoid;
-CFrame.new(-math.huge, -42.6603165, -10.4492311, -0.552548051, -0.724469781, -0.412109613, 0.468404055, 0.13906762, -0.872500956, 0.68941164, -0.675132513, 0.262503028);
-0;
-39;
- Vector3.new(0, 5, 0);
- "";
- 0.075;
-Color3.new(255, 255, 255);
-"rbxassetid://386946017";
-0;
-0;
-				}
-PseudoCall(game:GetService("ReplicatedStorage").Damage, Arguments);
+local userdata_1 = PlayerV.Humanoid;
+local number_1 = 0;
+local number_2 = math.huge;
+local userdata_2 = Vector3.new(0,5,0);
+local Target = game:GetService("ReplicatedStorage").RoadRollerSlam;
+Target:FireServer(userdata_1, number_1, number_2, userdata_2);
 		end
 		end
 		end
